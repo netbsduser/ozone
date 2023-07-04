@@ -1,0 +1,9 @@
+	set default ../objects/
+	gcc -c -o testfilext.o -D_OZONE -DOZ_HW_TYPE_486 ../sources/testfilext.c
+	if {oz_status!=1} goto done
+	ld -d -r -o testfilext.r testfilext.o oz_crtl_start.o ../libraries/oz_crtl.a
+	if {oz_status!=1} goto done
+	set default ../binaries/
+	elfconv testfilext.oz ../objects/testfilext.r oz_kernel_486.oz
+done:
+	set default ../sources/

@@ -1,0 +1,17 @@
+!!init pciide_pm.4 oz_disk_fs ozone
+!!mount pciide_pm.4 oz_disk_fs
+!!copy floppy.p0.oz_dfs:/oz_loader_486.bb pciide_pm.4.oz_dfs:/oz_loader_486.bb
+!!copy floppy.p0.oz_dfs:/oz_kernel_486.oz pciide_pm.4.oz_dfs:/oz_kernel_486.oz
+!!copy floppy.p0.oz_dfs:/oz_cli.oz        pciide_pm.4.oz_dfs:/oz_cli.oz
+!!copy floppy.p0.oz_dfs:/oz_startup.cli   pciide_pm.4.oz_dfs:/oz_startup.cli
+!!copy floppy.p0.oz_dfs:/oz_util_copy.oz  pciide_pm.4.oz_dfs:/oz_util_copy.oz
+!!copy floppy.p0.oz_dfs:/oz_util_dir.oz   pciide_pm.4.oz_dfs:/oz_util_dir.oz
+!!copy floppy.p0.oz_dfs:/oz_util_init.oz  pciide_pm.4.oz_dfs:/oz_util_init.oz
+!!copy floppy.p0.oz_dfs:/oz_util_mount.oz pciide_pm.4.oz_dfs:/oz_util_mount.oz
+!!copy floppy.p0.oz_dfs:/infloop.oz       pciide_pm.4.oz_dfs:/infloop.oz
+!!set load_device pciide_pm.4
+!!set load_script startup.ldr
+!!writeboot pciide_pm.4.oz_dfs:/oz_loader_486.bb 0 64
+!!dismount pciide_pm.4.fs
+set load_device 209.113.172.16.2290
+set load_fstemplate oz_ip_fs

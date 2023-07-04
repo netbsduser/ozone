@@ -1,0 +1,7 @@
+mount 2m ramdisk OZ_SYSTEM_TABLE%rdraw
+create symbol h_logname {oz_lnm_lookup ("rdraw", "user")}
+create symbol rdraw {oz_lnm_string (h_logname, 0)}
+init  {rdraw} oz_disk_fs 32m_ramdisk
+mount {rdraw} oz_disk_fs OZ_SYSTEM_TABLE%rd:
+#create logical name OZ_CLI_TABLES%comprix comprix.oz
+#create logical name OZ_SYSTEM_TABLE%OZ_IMAGE_DIR 209.113.172.16.2290:/ 209.113.172.16.2290:/ix/

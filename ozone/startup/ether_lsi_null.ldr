@@ -1,0 +1,7 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!
+!!	ether_lsi_null.ldr
+!!
+set load_device lsil875_0_9.1
+set load_fstemplate oz_dfs
+set nonpaged_pool_size 8388608

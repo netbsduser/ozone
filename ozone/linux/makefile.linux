@@ -1,0 +1,144 @@
+BIN = 
+LIB = 
+OBJ = 
+SRC = 
+TST = 
+
+OZ_INC = ../includes/
+OZ_LIB = ../libraries/
+OZ_OBJ = ../objects/
+OZ_SRC = ../sources/
+
+# Device driver objects for the Linux Loader
+
+DEV_LINUX_OBJS = \
+	$(OZ_OBJ)oz_dev_cdfs.o		\
+	$(OZ_OBJ)oz_dev_dfs.o		\
+	$(OZ_OBJ)oz_dev_vdfs.o		\
+	$(OZ_OBJ)oz_dev_conclass.o	\
+	$(OBJ)oz_dev_inits_linux.o	\
+	$(OBJ)linux_dev_ttyport.o	\
+	$(OBJ)oz_dev_linux_fs.o		\
+	$(OBJ)linux_dev_disk.o
+
+# Library objects for the Linux Loader
+
+LDR_LINUX_OBJS = \
+	$(OZ_OBJ)oz_hw_bootblock_486.o	\
+	$(OZ_OBJ)oz_knl_cache.o		\
+	$(OZ_OBJ)oz_knl_crtl_486.o	\
+	$(OZ_OBJ)oz_knl_dcache.o	\
+	$(OZ_OBJ)oz_knl_devio.o		\
+	$(OZ_OBJ)oz_knl_event.o		\
+	$(OZ_OBJ)oz_knl_handle.o	\
+	$(OZ_OBJ)oz_knl_image.o		\
+	$(OZ_OBJ)oz_knl_image_oz.o	\
+	$(OZ_OBJ)oz_knl_kmalloc.o	\
+	$(OZ_OBJ)oz_knl_logname.o	\
+	$(OZ_OBJ)oz_knl_lowipl.o	\
+	$(OZ_OBJ)oz_knl_malloc.o	\
+	$(OZ_OBJ)oz_knl_misc.o		\
+	$(OZ_OBJ)oz_knl_printk.o	\
+	$(OZ_OBJ)oz_knl_sdata.o		\
+	$(OZ_OBJ)oz_knl_security.o	\
+	$(OZ_OBJ)oz_knl_shuthand.o	\
+	$(OZ_OBJ)oz_sys_copyright.o	\
+	$(OZ_OBJ)oz_sys_dateconv.o	\
+	$(OZ_OBJ)oz_sys_recio.o		\
+	$(OZ_OBJ)oz_sys_xprintf.o	\
+	$(OZ_OBJ)oz_sys_vxprintf_fp.o
+
+
+# Compilation options
+
+OZINCL  = -I. -I$(OZ_INC)
+CCFLAGS = -g -DOZ_HW_TYPE_486
+CCFLAXP = -g -DOZ_HW_TYPE_AXP
+CCLINKS = 
+OZCC    = gcc $(OZINCL) $(CCFLAGS) -c -o
+
+# What to build by default
+
+default: \
+	$(BIN)elfraw			\
+	$(BIN)gzipmain			\
+	$(BIN)ip_fs_server_linux	\
+	$(BIN)oz_loader_linux		\
+	$(BIN)oz_util_elfconv		\
+	$(TST)datetest
+
+$(BIN)elfraw: \
+		$(SRC)elfraw.c
+	gcc $(OZINCL) $(CCFLAGS) $(CCLINKS) -o $(BIN)elfraw $(SRC)elfraw.c
+
+$(BIN)gzipmain: \
+		$(SRC)gzipmain.c $(OZ_OBJ)gzip.o
+	gcc $(OZINCL) $(CCFLAGS) $(CCLINKS) -o $(BIN)gzipmain $(SRC)gzipmain.c $(OZ_OBJ)gzip.o
+
+$(BIN)ip_fs_server_linux: \
+		$(SRC)ip_fs_server_linux.c	\
+		$(OZ_INC)oz_dev_ip_fs.h		\
+		$(OZ_OBJ)oz_knl_crtl_486.o	\
+		$(OZ_OBJ)oz_sys_dateconv.o
+	gcc $(OZINCL) $(CCFLAGS) $(CCLINKS) -o $(BIN)ip_fs_server_linux \
+		$(SRC)ip_fs_server_linux.c 	\
+		$(OZ_OBJ)oz_knl_crtl_486.o	\
+		$(OZ_OBJ)oz_sys_dateconv.o
+
+$(BIN)oz_loader_linux: $(SRC)oz_loader_linux.c		\
+		$(OZ_OBJ)oz_ldr_loader.o		\
+		$(OZ_OBJ)oz_ldr_misc.o			\
+		$(OZ_OBJ)oz_ldr_params.o		\
+		$(OZ_OBJ)oz_ldr_pdata.o			\
+		$(OZ_OBJ)oz_ldr_phymem.o		\
+		$(OZ_OBJ)oz_ldr_section.o		\
+		$(OZ_OBJ)oz_ldr_systempdata_486.o	\
+		$(OZ_OBJ)oz_ldr_thread.o		\
+		$(OZ_OBJ)oz_ldr_thread_486.o		\
+		$(OZ_OBJ)gzip.o				\
+		$(LDR_LINUX_OBJS)			\
+		$(LIB)oz_dev_linux.a
+	gcc $(OZINCL) $(CCFLAGS) $(CCLINKS) -o $(BIN)oz_loader_linux \
+		$(SRC)oz_loader_linux.c			\
+		$(OZ_OBJ)oz_ldr_loader.o		\
+		$(OZ_OBJ)oz_ldr_misc.o			\
+		$(OZ_OBJ)oz_ldr_params.o		\
+		$(OZ_OBJ)oz_ldr_pdata.o			\
+		$(OZ_OBJ)oz_ldr_phymem.o		\
+		$(OZ_OBJ)oz_ldr_section.o		\
+		$(OZ_OBJ)oz_ldr_systempdata_486.o	\
+		$(OZ_OBJ)oz_ldr_thread.o		\
+		$(OZ_OBJ)oz_ldr_thread_486.o		\
+		$(OZ_OBJ)gzip.o				\
+		$(LDR_LINUX_OBJS)			\
+		$(LIB)oz_dev_linux.a			\
+		-Xlinker --defsym -Xlinker OZ_IMAGE_BASEADDR=0
+
+$(BIN)oz_util_elfconv: $(OZ_SRC)oz_util_elfconv.c
+	gcc $(OZINCL) $(CCFLAGS) $(CCLINKS) -o $(BIN)oz_util_elfconv $(OZ_SRC)oz_util_elfconv.c
+
+$(BIN)oz_util_elfconv_axp: $(OZ_SRC)oz_util_elfconv.c
+	gcc $(OZINCL) $(CCFLAXP) $(CCLINKS) -o $(BIN)oz_util_elfconv_axp $(OZ_SRC)oz_util_elfconv.c
+
+$(TST)datetest: $(TST)datetest.c
+	gcc $(OZINCL) $(CCFLAGS) $(CCLINKS) -o $(TST)datetest \
+		$(TST)datetest.c		\
+		$(LIB)oz_dev_linux.a $(OZ_LIB)oz_knl.a $(OZ_LIB)oz_sys.a \
+		$(LIB)oz_dev_linux.a $(OZ_LIB)oz_knl.a $(OZ_LIB)oz_sys.a \
+		$(LIB)oz_dev_linux.a $(OZ_LIB)oz_knl.a $(OZ_LIB)oz_sys.a
+
+$(LIB)oz_dev_linux.a: $(DEV_LINUX_OBJS)
+	rm -f $(LIB)oz_dev_linux.a
+	ar rcv $(LIB)oz_dev_linux.a $(DEV_LINUX_OBJS)
+
+$(OBJ)oz_dev_linux_fs.o: $(SRC)oz_dev_linux_fs.c
+	$(OZCC) $(OBJ)oz_dev_linux_fs.o $(SRC)oz_dev_linux_fs.c
+
+$(OBJ)linux_dev_disk.o: $(SRC)linux_dev_disk.c
+	$(OZCC) $(OBJ)linux_dev_disk.o $(SRC)linux_dev_disk.c
+
+$(OBJ)linux_dev_ttyport.o: $(SRC)linux_dev_ttyport.c
+	$(OZCC) $(OBJ)linux_dev_ttyport.o $(SRC)linux_dev_ttyport.c
+
+$(OBJ)oz_dev_inits_linux.o: $(SRC)oz_dev_inits_linux.c
+	$(OZCC) $(OBJ)oz_dev_inits_linux.o $(SRC)oz_dev_inits_linux.c

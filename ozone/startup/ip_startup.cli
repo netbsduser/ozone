@@ -1,0 +1,41 @@
+#
+# Start IP stuff
+#
+	create symbol h_device {oz_h_info ("", "device_first")}
+ether_loop:
+	if {h_device == ""} exit
+	if {oz_h_info (h_device, "device_classname") == "ether"} goto got_ether
+	create symbol h_nextdev {oz_h_info (h_device, "device_next")}
+	close handle {h_device}
+	create symbol h_device {h_nextdev}
+	goto ether_loop
+got_ether:
+	close handle {h_device}
+#
+create logical name  -kernel OZ_SYSTEM_TABLE%OZ_IP_HOSTNAME ozonx.nii.net
+#
+create logical table -kernel OZ_SYSTEM_DIRECTORY%OZ_IP_SERVICES
+create logical name  -kernel OZ_IP_SERVICES%ftp    tcp:21
+create logical name  -kernel OZ_IP_SERVICES%telnet tcp:23
+create logical name  -kernel OZ_IP_SERVICES%domain udp:53 tcp:53
+#
+ip filter add input 0 accept srcipaddr 65.85.95.144/28		# accept anything coming in from home
+ip filter add input 1 accept srcipaddr 209.113.172.0/24		# accept anything coming in from nii
+ip filter add input 2 deny   tcpflagsyn tcpflagack not		# deny connection initiations from anywhere else
+ip filter add input 3 accept proto 6				# accept other tcp packets from anywhere
+ip filter add input 4 deny					# deny everything else
+#
+ip hw add etherloop
+ip hw ipam add etherloop 127.0.0.1 255.0.0.0
+ip hw add dectulip_2_4
+ip hw ipam add dectulip_2_4 65.85.95.150 65.85.95.144 255.255.255.240
+ip route add 0.0.0.0 0.0.0.0 65.85.95.145
+ip dns server add 209.113.172.17 53
+ip dns server add 209.113.237.3 53
+#
+##-nowait mount 65.85.95.151,2290 oz_ip_fs OZ_SYSTEM_TABLE%linux:
+#
+# Start daemons
+#
+-orphan -nowait -thread OZ_SYSTEM_TABLE%ftpd_thread    run oz_util_ftpd.oz    21 -restrictports
+-orphan -nowait -thread OZ_SYSTEM_TABLE%telnetd_thread run oz_util_telnetd.oz 23

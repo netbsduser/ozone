@@ -1,0 +1,7 @@
+tar czvf my_patch.binutils-2.9.1.tar.gz \
+	how_to_patch.txt \
+	binutils-2.9.1/bfd/makebfd.ozone \
+	binutils-2.9.1/gas/config/tc-i386.c \
+	binutils-2.9.1/gas/makegas.ozone \
+	binutils-2.9.1/ld/makeld.ozone \
+	binutils-2.9.1/libiberty/makeiberty.ozone

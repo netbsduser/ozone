@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+#  Link an executable
+#
+#    $1 = name of executable without the .oz
+#
+ld -d -r -Map $1.m -o $1.r $1.o $2
+../elfconvert 20000000 $1.oz $1.r ../oz_kernel_486.oz > $1.oz.m
+sort $1.oz.m > $1.oz.ms

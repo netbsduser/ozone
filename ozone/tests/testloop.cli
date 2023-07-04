@@ -1,0 +1,21 @@
+#
+# oz_arg_1 = name of other directory without trailing slash (eg, lsil875_0_10.oz_dfs:/o3one) to run in
+#
+	echo {oz_verify(1)}
+	if {oz_arg_1 == ""} exit
+	credir {oz_arg_1}/
+	credir {oz_arg_1}/sources/
+	credir {oz_arg_1}/includes/
+	credir {oz_arg_1}/binaries/
+	credir {oz_arg_1}/objects/
+	credir {oz_arg_1}/libraries/
+	delete {oz_arg_1}/includes/*
+	delete {oz_arg_1}/sources/*
+	copy /ozone/includes/* {oz_arg_1}/includes/
+	copy /ozone/sources/* {oz_arg_1}/sources/
+	set default {oz_arg_1}/sources/
+loop:
+	delete ../objects/*
+	purge -keep 3 ../binaries/*
+	script ozmake.cli ../binaries/oz_kernel_486.oz
+	if {oz_status==1} goto loop

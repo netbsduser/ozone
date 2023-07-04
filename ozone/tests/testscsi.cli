@@ -1,0 +1,12 @@
+	dism lsil875_0_10.0.oz_dfs
+	init lsil875_0_10.0 oz_dfs scsidisk
+	mount -nocache lsil875_0_10.0 oz_dfs
+	create logical name OZ_JOB_TABLE%num 1
+	-nowait -input testscsiloop.cli cli
+	wait until 5.0
+	create logical name OZ_JOB_TABLE%num 2
+	-nowait -input testscsiloop.cli cli
+	wait until 5.0
+	create logical name OZ_JOB_TABLE%num 3
+	-nowait -input testscsiloop.cli cli
+	wait until 5.0

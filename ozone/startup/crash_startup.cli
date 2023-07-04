@@ -1,0 +1,3 @@
+crash create /crash.dmp;1 {1024*512+16}
+crash file /crash.dmp
+crash mode dump ## debug

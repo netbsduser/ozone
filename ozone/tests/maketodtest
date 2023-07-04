@@ -1,0 +1,1 @@
+cc -g -o todtest todtest.c oz_hw486_tod.s oz_sys_dateconv_486.s -DOZ_HW_TYPE_486 oz_sys_dateconv.c oz_sys_xprintf.c

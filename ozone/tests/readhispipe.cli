@@ -1,0 +1,5 @@
+loop:
+	read file -logical hispipe x
+	if {oz_status != 1} exit {oz_status}
+	echo {x}
+	goto loop

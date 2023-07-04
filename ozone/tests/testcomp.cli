@@ -1,0 +1,5 @@
+#
+	echo {oz_verify(1)}
+	set default /o3one/sources/
+	delete ../objects/*
+	script ozmake.cli ../binaries/oz_kernel_486.oz

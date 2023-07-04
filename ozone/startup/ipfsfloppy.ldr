@@ -1,0 +1,45 @@
+!
+!  ipfsfloppy.ldr
+!
+!  It sets the loader boot params
+!  before the kernel is loaded
+!
+
+init -clusterfactor 8 ramdisk.8M@24M oz_dfs ramboot	! format ram at 24M..32M as an oz_dfs filesystem
+mount ramdisk.8M@24M oz_dfs				! mount it
+
+mount rtl8139_0_12/65.85.95.150//255.255.255.240//65.85.95.151,2290 oz_ip_fs ! access ip_fs_server_linux as 65.85.95.151.2290
+
+copy 65.85.95.151.2290:/binaries/oz_loader_486.bb      ramdisk.8M@24M.oz_dfs:/oz_loader_486.bb
+copy 65.85.95.151.2290:/binaries/oz_kernel_486.oz      ramdisk.8M@24M.oz_dfs:/oz_kernel_486.oz
+copy 65.85.95.151.2290:/binaries/oz_cli.oz             ramdisk.8M@24M.oz_dfs:/oz_cli.oz
+copy 65.85.95.151.2290:/binaries/oz_util_cat.oz        ramdisk.8M@24M.oz_dfs:/oz_util_cat.oz
+copy 65.85.95.151.2290:/binaries/oz_util_copy.oz       ramdisk.8M@24M.oz_dfs:/oz_util_copy.oz
+copy 65.85.95.151.2290:/binaries/oz_util_credir.oz     ramdisk.8M@24M.oz_dfs:/oz_util_credir.oz
+copy 65.85.95.151.2290:/binaries/oz_util_delete.oz     ramdisk.8M@24M.oz_dfs:/oz_util_delete.oz
+copy 65.85.95.151.2290:/binaries/oz_util_dir.oz        ramdisk.8M@24M.oz_dfs:/oz_util_dir.oz
+copy 65.85.95.151.2290:/binaries/oz_util_dismount.oz   ramdisk.8M@24M.oz_dfs:/oz_util_dismount.oz
+copy 65.85.95.151.2290:/binaries/oz_util_dump.oz       ramdisk.8M@24M.oz_dfs:/oz_util_dump.oz
+copy 65.85.95.151.2290:/binaries/oz_util_init.oz       ramdisk.8M@24M.oz_dfs:/oz_util_init.oz
+copy 65.85.95.151.2290:/binaries/oz_util_logon.oz      ramdisk.8M@24M.oz_dfs:/oz_util_logon.oz
+copy 65.85.95.151.2290:/binaries/oz_util_mount.oz      ramdisk.8M@24M.oz_dfs:/oz_util_mount.oz
+copy 65.85.95.151.2290:/binaries/oz_util_partition.oz  ramdisk.8M@24M.oz_dfs:/oz_util_partition.oz
+copy 65.85.95.151.2290:/binaries/oz_util_scsi.oz       ramdisk.8M@24M.oz_dfs:/oz_util_scsi.oz
+copy 65.85.95.151.2290:/binaries/oz_util_shutdown.oz   ramdisk.8M@24M.oz_dfs:/oz_util_shutdown.oz
+copy 65.85.95.151.2290:/binaries/oz_util_writeboot.oz  ramdisk.8M@24M.oz_dfs:/oz_util_writeboot.oz
+copy 65.85.95.151.2290:/binaries/edt.oz                ramdisk.8M@24M.oz_dfs:/edt.oz
+copy 65.85.95.151.2290:/startup/ipfsfloppy.cli         ramdisk.8M@24M.oz_dfs:/ipfsfloppy.cli
+copy 65.85.95.151.2290:/startup/filldisk.cli           ramdisk.8M@24M.oz_dfs:/filldisk.cli
+
+dism ramdisk.8M@24M.oz_dfs
+
+set load_device ramdisk.8M@24M		! boot from the ramdisk we just made
+set kernel_image oz_kernel_486.oz	! name of kernel image file to load
+set startup_image oz_cli.oz		! startup executable file (the 'shell')
+set startup_input ipfsfloppy.cli	! startup script file
+set startup_output console:		! startup output file
+set startup_error console:		! startup error file
+set kernel_stack_size 12288		! kernel stack size (12K)
+set def_user_stack_size 1048576		! user stack size (1Meg)
+set nonpaged_pool_size 4194304		! non-paged pool size (4Meg)
+set tz_offset_rtc -18000		! RTC is in EST

@@ -1,0 +1,9 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!
+!!	etherstartup_scsi.ldr
+!!
+!!  Called by remote booting system to boot the hard disk
+!!
+set load_device lsil875_0_9.0	! set to boot from harddisk
+set load_fstemplate oz_dfs
+set nonpaged_pool_size 8388608

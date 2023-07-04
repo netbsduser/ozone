@@ -1,0 +1,24 @@
+#
+#  Copy updated files from baron
+#
+credir OZ_LOAD_FS:/binutils/binaries/
+credir OZ_LOAD_FS:/gcc/binaries/
+credir OZ_LOAD_FS:/gcc/libraries/
+credir OZ_LOAD_FS:/gcc/includes/
+credir OZ_LOAD_FS:/ozone/binaries/
+credir OZ_LOAD_FS:/ozone/includes/
+credir OZ_LOAD_FS:/ozone/libraries/
+credir OZ_LOAD_FS:/ozone/startup/
+#
+copy -update baron:/binutils/binaries/*  OZ_LOAD_FS:/binutils/binaries/
+copy -update baron:/binutils/startup.cli OZ_LOAD_FS:/binutils/startup.cli
+#
+copy -update baron:/gcc/binaries/*       OZ_LOAD_FS:/gcc/binaries/
+copy -update baron:/gcc/libraries/*      OZ_LOAD_FS:/gcc/libraries/
+copy -update baron:/gcc/includes/*       OZ_LOAD_FS:/gcc/includes/
+copy -update baron:/gcc/startup.cli      OZ_LOAD_FS:/gcc/startup.cli
+#
+copy -update baron:/ozone/binaries/*     OZ_LOAD_FS:/ozone/binaries/
+copy -update baron:/ozone/includes/*     OZ_LOAD_FS:/ozone/includes/
+copy -update baron:/ozone/libraries/*    OZ_LOAD_FS:/ozone/libraries/
+copy -update baron:/ozone/startup/*      OZ_LOAD_FS:/ozone/startup/

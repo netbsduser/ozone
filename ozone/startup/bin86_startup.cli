@@ -1,0 +1,4 @@
+create logical name OZ_SYSTEM_TABLE%OZ_IMAGE_DIR -copy OZ_SYSTEM_TABLE%OZ_IMAGE_DIR BIN86_BINARIES:
+create logical name OZ_SYSTEM_TABLE%BIN86_BINARIES UTIL_DISK:/bin86/binaries/
+create logical name OZ_CLI_TABLES%as86 as86.oz
+create logical name OZ_CLI_TABLES%ld86 ld86.oz

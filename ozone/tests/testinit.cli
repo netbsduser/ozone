@@ -1,0 +1,18 @@
+	echo {oz_verify(1)}
+
+	credir /o3one/
+	credir /o3one/sources/
+	credir /o3one/includes/
+	credir /o3one/binaries/
+	credir /o3one/objects/
+	credir /o3one/libraries/
+
+	delete /o3one/sources/*
+	delete /o3one/includes/*
+	delete /o3one/binaries/*
+	delete /o3one/objects/*
+	delete /o3one/libraries/*
+
+	copy /ozone/includes/* /o3one/includes/
+	copy /ozone/sources/* /o3one/sources/
+

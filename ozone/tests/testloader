@@ -1,0 +1,7 @@
+#!/bin/bash -v
+	echo /dev/hda3:63:15:0 > hardisk.tmp
+	echo EXIT >> hardisk.tmp
+	echo set load_script testloader.ldr >> hardisk.tmp
+	echo exit >> hardisk.tmp
+	export TTYNAME=hardisk.tmp
+	gdb ../linux/oz_loader_linux

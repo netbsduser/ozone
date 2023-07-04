@@ -1,0 +1,73 @@
+#
+# Define oz_cli's external commands
+#
+create logical table -kernel OZ_SYSTEM_DIRECTORY%OZ_CLI_TABLES
+create logical name  -kernel OZ_CLI_TABLES%cli       oz_cli.oz
+create logical name  -kernel OZ_CLI_TABLES%cat       oz_util_cat.oz
+create logical name  -kernel OZ_CLI_TABLES%copy      oz_util_copy.oz
+create logical name  -kernel OZ_CLI_TABLES%crash     oz_util_crash.oz
+create logical name  -kernel OZ_CLI_TABLES%credir    oz_util_credir.oz
+create logical name  -kernel OZ_CLI_TABLES%dd        oz_util_dd.oz
+create logical name  -kernel OZ_CLI_TABLES%delete    oz_util_delete.oz
+create logical name  -kernel OZ_CLI_TABLES%dir       oz_util_dir.oz
+create logical name  -kernel OZ_CLI_TABLES%dism      oz_util_dismount.oz
+create logical name  -kernel OZ_CLI_TABLES%dump      oz_util_dump.oz
+create logical name  -kernel OZ_CLI_TABLES%edt       edt.oz
+create logical name  -kernel OZ_CLI_TABLES%elfconv   oz_util_elfconv.oz
+create logical name  -kernel OZ_CLI_TABLES%format    oz_util_diskfmt.oz
+create logical name  -kernel OZ_CLI_TABLES%gunzip    oz_util_gzip.oz
+create logical name  -kernel OZ_CLI_TABLES%gzip      oz_util_gzip.oz
+create logical name  -kernel OZ_CLI_TABLES%init      oz_util_init.oz
+create logical name  -kernel OZ_CLI_TABLES%ip        oz_util_ip.oz
+create logical name  -kernel OZ_CLI_TABLES%make      oz_util_make.oz
+create logical name  -kernel OZ_CLI_TABLES%mount     oz_util_mount.oz
+create logical name  -kernel OZ_CLI_TABLES%partition oz_util_partition.oz
+create logical name  -kernel OZ_CLI_TABLES%purge     oz_util_delete.oz
+create logical name  -kernel OZ_CLI_TABLES%rename    oz_util_copy.oz
+create logical name  -kernel OZ_CLI_TABLES%scsi      oz_util_scsi.oz
+create logical name  -kernel OZ_CLI_TABLES%shutdown  oz_util_shutdown.oz
+create logical name  -kernel OZ_CLI_TABLES%sort      oz_util_sort.oz
+create logical name  -kernel OZ_CLI_TABLES%tailf     oz_util_tailf.oz
+create logical name  -kernel OZ_CLI_TABLES%telnet    oz_util_telnet.oz
+create logical name  -kernel OZ_CLI_TABLES%top       oz_util_top.oz
+create logical name  -kernel OZ_CLI_TABLES%type      oz_util_cat.oz
+#
+# Add current directory to image path
+#
+create logical name OZ_SYSTEM_TABLE%OZ_IMAGE_DIR OZ_DEFAULT_DIR: -copy OZ_IMAGE_DIR
+#
+# Mount scuzzy disk
+#
+create symbol util_disk OZ_LOAD_FS
+##mount lsil875_0_10.0 oz_dfs
+##if {oz_status==1} create symbol util_disk lsil875_0_10.0.oz_dfs
+create logical name OZ_SYSTEM_TABLE%UTIL_DISK {util_disk}:
+show logical name UTIL_DISK
+#
+# Set up timezone file
+#
+create symbol -string load_dir 'oz_lnm_string (oz_lnm_lookup ("OZ_SYSTEM_TABLE%OZ_LOAD_DIR", "kernel"), 0)'
+create logical name  -kernel OZ_SYSTEM_TABLE%OZ_TIMEZONE_DIR {load_dir}../timezones/
+set timezone EST5EDT
+#
+# Define image used to log in and the password file
+#
+#   If you don't want to bother with passwords and such, just change the OZ_LOGON_IMAGE definition like this:
+#
+## create logical name -kernel OZ_SYSTEM_TABLE%OZ_LOGON_IMAGE oz_cli.oz -value -interactive
+#
+#     - and the system will start the shell instead of prompting for username/password
+#       just make sure you don't start the telnet daemon
+#
+create logical name  -kernel OZ_SYSTEM_TABLE%OZ_PASSWORD_FILE {load_dir}../startup/password.dat
+create logical name  -kernel OZ_SYSTEM_TABLE%OZ_LOGON_IMAGE   oz_util_logon.oz
+create logical name OZ_SYSTEM_TABLE%OZ_UTIL_LOGON_MSG "OZONE experimental system" "Authorized access only" "See http://www.o3one.org for details"
+#
+# Start other stuff up
+#
+##script ../startup/ip_startup.cli
+script ../startup/bin86_startup.cli
+script ../startup/binutils_startup.cli
+script ../startup/gcc_startup.cli
+#
+echo "press control-shift-L to logon"

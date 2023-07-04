@@ -1,0 +1,7 @@
+	create symbol -string when 'oz_date_now'
+loop:
+	run oz_util_timexc.oz baron.nii.net 499 300 OZ_JOB_TABLE%timexc_last
+	create symbol -string when 'oz_date_add (when, "0:15:0")'
+	show symbol when
+	wait until {when}
+	goto loop

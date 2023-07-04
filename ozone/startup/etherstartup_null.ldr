@@ -1,0 +1,7 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!
+!!	etherstartup_null.ldr
+!!
+set load_device ide_pm					! set to boot from harddisk
+set load_fstemplate oz_dfs
+set nonpaged_pool_size 8388608

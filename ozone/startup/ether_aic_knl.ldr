@@ -1,0 +1,15 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!
+!!	ether_aic_knl.ldr
+!!
+!!  Called by remote booting system to copy a new kernel to the aic78xx
+!!  scsi hard disk then boot the hard disk
+!!
+mount aic78xx_0_6.1 oz_dfs					! mount hard disk
+
+copy 65.85.95.151.2290:/ozone/binaries/oz_kernel_486.oz aic78xx_0_6.1.oz_dfs:/ozone/binaries/oz_kernel_486.oz
+
+dismount aic78xx_0_6.1.oz_dfs					! dismount harddisk
+set load_device aic78xx_0_6.1					! set to boot from harddisk
+set load_fstemplate oz_dfs
+set nonpaged_pool_size 8388608

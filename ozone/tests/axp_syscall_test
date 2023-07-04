@@ -1,0 +1,3 @@
+export PATH=/home/mrieker/ozone/linux_utils/axp:$PATH
+gcc -g -O2 -S -o ../alphaobj/axp_syscall_test.s axp_syscall_test.c
+as -m21164a -o ../alphaobj/axp_syscall_test.o -a=../alphaobj/axp_syscall_test.l ../alphaobj/axp_syscall_test.s

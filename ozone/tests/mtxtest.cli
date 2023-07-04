@@ -1,0 +1,20 @@
+create mutex mtxlnm mutex asdf
+open mutex mtxlll mutex.1 asdf
+set mutex mtxlnm ex
+-nowait -thread zz set mutex mtxlll ex
+!show system
+!show system
+!show system
+!show system
+!abort thread zz
+!delete logical name zz
+!show job -threads
+!show job -threads
+!show job -threads
+!show job -threads
+!show job -threads
+!show job -threads
+!show job -threads
+!show job -threads
+!show job -threads
+!show job -threads

@@ -1,0 +1,3 @@
+echo "{oz_arg_0}: executing startup procedure ..."
+create symbol v {oz_verify (1)}
+script ../startup/commonstartup.cli

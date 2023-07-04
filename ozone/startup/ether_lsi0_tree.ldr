@@ -1,0 +1,29 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!
+!!	ether_lsi0_tree.ldr
+!!
+!!  Called by remote system on boot.  It copies all the os files
+!!  from the linux system to a harddisk, then boots the harddisk
+
+mount lsil875_0_9.0 oz_dfs								! explicit mount so caching gets enabled
+
+delete lsil875_0_9.0.oz_dfs:/ozone/							! delete the old tree
+
+mkdir lsil875_0_9.0.oz_dfs:/ozone/
+
+copy 65.85.95.151.2290:/ozone/includes/  lsil875_0_9.0.oz_dfs:/ozone/includes/		! copy ozone stuff
+copy 65.85.95.151.2290:/ozone/sources/   lsil875_0_9.0.oz_dfs:/ozone/sources/
+copy 65.85.95.151.2290:/ozone/msdrivers/ lsil875_0_9.0.oz_dfs:/ozone/msdrivers/
+copy 65.85.95.151.2290:/ozone/objects/   lsil875_0_9.0.oz_dfs:/ozone/objects/
+copy 65.85.95.151.2290:/ozone/libraries/ lsil875_0_9.0.oz_dfs:/ozone/libraries/
+copy 65.85.95.151.2290:/ozone/binaries/  lsil875_0_9.0.oz_dfs:/ozone/binaries/
+copy 65.85.95.151.2290:/ozone/startup/   lsil875_0_9.0.oz_dfs:/ozone/startup/
+
+set startup_input ../startup/hardiskstartup.cli
+set nonpaged_pool_size 8388608								! make sure it boots with 8meg pool
+writeboot lsil875_0_9.0.oz_dfs:/ozone/binaries/oz_loader_486.bb				! write bootblock with ethernet startup params
+
+dismount lsil875_0_9.0.oz_dfs								! dismount harddisk
+
+set load_device lsil875_0_9.0								! set to boot from harddisk on exit
+set load_fstemplate oz_dfs

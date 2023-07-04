@@ -1,0 +1,9 @@
+	echo {oz_verify (1)}
+	create symbol h_logname {oz_lnm_lookup ("num", "user")}
+	create symbol num {oz_lnm_string (h_logname, 0)}
+	close handle {h_logname}
+	credir lsil875_0_10.0.oz_dfs:/{num}/
+loop:
+	purge -keep 3 lsil875_0_10.0.oz_dfs:/{num}/oz_loader_486.bb;*
+	copy ide_pm.oz_dfs:/oz_loader_486.bb;1 lsil875_0_10.0.oz_dfs:/{num}/oz_loader_486.bb
+	if {oz_status == 1} goto loop

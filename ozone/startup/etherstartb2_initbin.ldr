@@ -1,0 +1,48 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!
+!!	etherstartup.ldr
+!!
+!!  Called by make_efloppy.ldr when booted to copy the files 
+!!  from the linux system to a harddisk, then boot the harddisk
+
+init ide_pm oz_dfs harddisk							! wipe whatever's on hard drive
+
+mount ide_pm oz_dfs								! explicit mount so caching gets enabled
+
+mkdir ide_pm.oz_dfs:/bin86/							! create directories
+mkdir ide_pm.oz_dfs:/binutils/
+mkdir ide_pm.oz_dfs:/gcc/
+mkdir ide_pm.oz_dfs:/glibc/
+mkdir ide_pm.oz_dfs:/glibc/sources/
+mkdir ide_pm.oz_dfs:/glibc/sources/glibc-2.0.6/
+mkdir ide_pm.oz_dfs:/ozone/
+
+##copy 65.85.95.151.2290:/bin86/binaries/    ide_pm.oz_dfs:/bin86/binaries/	! copy utility files
+##copy 65.85.95.151.2290:/binutils/binaries/ ide_pm.oz_dfs:/binutils/binaries/
+##copy 65.85.95.151.2290:/gcc/binaries/      ide_pm.oz_dfs:/gcc/binaries/
+##copy 65.85.95.151.2290:/gcc/includes/      ide_pm.oz_dfs:/gcc/includes/
+##copy 65.85.95.151.2290:/glibc/includes/    ide_pm.oz_dfs:/glibc/includes/
+##copy 65.85.95.151.2290:/glibc/sources/glibc-2.0.6/ctype/   ide_pm.oz_dfs:/glibc/sources/glibc-2.0.6/ctype/
+##copy 65.85.95.151.2290:/glibc/sources/glibc-2.0.6/intl/    ide_pm.oz_dfs:/glibc/sources/glibc-2.0.6/intl/
+##copy 65.85.95.151.2290:/glibc/sources/glibc-2.0.6/locale/  ide_pm.oz_dfs:/glibc/sources/glibc-2.0.6/locale/
+##copy 65.85.95.151.2290:/glibc/sources/glibc-2.0.6/posix/   ide_pm.oz_dfs:/glibc/sources/glibc-2.0.6/posix/
+##copy 65.85.95.151.2290:/glibc/sources/glibc-2.0.6/stdlib/  ide_pm.oz_dfs:/glibc/sources/glibc-2.0.6/stdlib/
+##copy 65.85.95.151.2290:/glibc/sources/glibc-2.0.6/string/  ide_pm.oz_dfs:/glibc/sources/glibc-2.0.6/string/
+##copy 65.85.95.151.2290:/glibc/sources/glibc-2.0.6/sysdeps/ ide_pm.oz_dfs:/glibc/sources/glibc-2.0.6/sysdeps/
+
+##copy 65.85.95.151.2290:/ozone/includes/  ide_pm.oz_dfs:/ozone/includes/		! copy ozone stuff
+##copy 65.85.95.151.2290:/ozone/sources/   ide_pm.oz_dfs:/ozone/sources/
+##copy 65.85.95.151.2290:/ozone/msdrivers/ ide_pm.oz_dfs:/ozone/msdrivers/
+##copy 65.85.95.151.2290:/ozone/objects/   ide_pm.oz_dfs:/ozone/objects/
+##copy 65.85.95.151.2290:/ozone/libraries/ ide_pm.oz_dfs:/ozone/libraries/
+copy 65.85.95.151.2290:/ozone/binaries/  ide_pm.oz_dfs:/ozone/binaries/
+copy 65.85.95.151.2290:/ozone/startup/   ide_pm.oz_dfs:/ozone/startup/
+
+set startup_input ../startup/hardiskstartup.cli
+set nonpaged_pool_size 8388608							! make sure it boots with 8meg pool
+writeboot ide_pm.oz_dfs:/ozone/binaries/oz_loader_486.bb			! write bootblock with ethernet startup params
+
+dismount ide_pm.oz_dfs								! dismount harddisk
+
+set load_device ide_pm								! set to boot from harddisk on exit
+set load_fstemplate oz_dfs

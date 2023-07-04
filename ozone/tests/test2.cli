@@ -1,0 +1,17 @@
+	echo {oz_verify(1)}
+	set default /
+	credir /o3one/
+	credir /o3one/sources/
+	credir /o3one/includes/
+	credir /o3one/binaries/
+	credir /o3one/objects/
+	credir /o3one/libraries/
+	copy /ozone/includes/* /o3one/includes/
+	copy /ozone/sources/make* /o3one/sources/make
+	copy /ozone/sources/oz* /o3one/sources/oz
+	copy /ozone/sources/test* /o3one/sources/test
+	set default /o3one/sources/
+#loop:
+#	delete ../objects/*
+#	script ozmake.cli ../binaries/oz_kernel_486.oz
+#	goto loop

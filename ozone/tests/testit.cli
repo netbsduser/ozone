@@ -1,0 +1,11 @@
+	mount 8m ramdisk OZ_JOB_TABLE%rdraw
+	create symbol h_logname {oz_lnm_lookup("rdraw","user")}
+	create symbol rdraw {oz_lnm_string(h_logname,0)}
+	close handle {h_logname}
+	init {rdraw} oz_dfs ramdisk
+	mount -nocache {rdraw} oz_dfs
+	credir {rdraw}.oz_dfs:/x/
+	run testfilext.oz {rdraw}.oz_dfs:/x/
+	dir {rdraw}.oz_dfs:/x/90*
+	dir {rdraw}.oz_dfs:/x/91*
+##	delete {rdraw}.oz_dfs:/x/9*

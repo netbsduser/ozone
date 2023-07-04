@@ -1,0 +1,8 @@
+echo /dev/hda3:63:255:0xe8e036 > test.tmp
+echo EXIT >> test.tmp
+echo mount -readonly dev_hda3 oz_dfs >> test.tmp
+echo dir dev_hda3.oz_dfs:/o3one/binaries/ >> test.tmp
+echo dir dev_hda3.oz_dfs:/o3one/objects/ >> test.tmp
+echo barf >> test.tmp
+export TTYNAME=test.tmp
+../linux/oz_loader_linux

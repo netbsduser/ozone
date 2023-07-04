@@ -1,0 +1,45 @@
+#
+# Kill thread by name given by arg #1
+#
+	create symbol threadname "{oz_arg_1}"
+	if {threadname != ""} goto doit
+	echo supply thread name as arg 1
+	exit
+doit:
+	echo {oz_arg_0}: aborting thread {threadname}
+	create symbol -integer threadname_l oz_len (threadname)
+	create symbol -string user_hand '""'
+	create symbol -string user_code '"user_first"'
+user_loop:
+	create symbol -string user_hand 'oz_h_info (user_hand, user_code)'
+	if {user_hand == ""} exit
+	create symbol -string user_code '"user_next"'
+	create symbol -string user_name 'oz_h_info (user_hand, "user_name")'
+	create symbol -string job_hand user_hand
+	create symbol -string job_code '"job_first"'
+job_loop:
+	create symbol -string job_hand 'oz_h_info (job_hand, job_code)'
+	if {job_hand == ""} goto user_loop
+	create symbol -string job_code '"job_next"'
+	create symbol -string job_name 'oz_h_info (job_hand, "job_name")'
+	create symbol -string proc_hand job_hand
+	create symbol -string proc_code '"process_first"'
+proc_loop:
+	create symbol -string proc_hand 'oz_h_info (proc_hand, proc_code)'
+	if {proc_hand == ""} goto job_loop
+	create symbol -string proc_code '"process_next"'
+	create symbol -string proc_name 'oz_h_info (proc_hand, "process_name")'
+	create symbol -string thread_hand proc_hand
+	create symbol -string thread_code '"thread_first"'
+thread_loop:
+	create symbol -string thread_hand 'oz_h_info (thread_hand, thread_code)'
+	if {thread_hand == ""} goto proc_loop
+	create symbol -string thread_code '"thread_next"'
+	create symbol -string thread_name 'oz_h_info (thread_hand, "thread_name")'
+	if {oz_sub (threadname_l, 0, thread_name) != threadname} goto thread_loop
+	create logical name thread_hand -object {thread_hand}
+	show thread thread_hand
+	abort thread thread_hand
+	echo {oz_arg_0}: abort status {oz_status}
+	delete logical name thread_hand
+	goto thread_loop

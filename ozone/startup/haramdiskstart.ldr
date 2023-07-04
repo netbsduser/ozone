@@ -1,0 +1,16 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!
+!!	haramdiskstart.ldr
+!!
+!!  Copy hard disk (ide_pm.3) to ram disk (128m@128m) then boot from ram disk
+!!  Hard disk is already mounted (read-only)
+!!
+init ramdisk.128m@128m oz_dfs 128m@128m					! init ram disk
+mount ramdisk.128m@128m oz_dfs						! mount ram disk
+copy ide_pm.3.oz_dfs:/bin86/    ramdisk.128m@128m.oz_dfs:/bin86/	! copy hard disk to ram disk
+copy ide_pm.3.oz_dfs:/binutils/ ramdisk.128m@128m.oz_dfs:/binutils/
+copy ide_pm.3.oz_dfs:/gcc/      ramdisk.128m@128m.oz_dfs:/gcc/
+copy ide_pm.3.oz_dfs:/glibc/    ramdisk.128m@128m.oz_dfs:/glibc/
+copy ide_pm.3.oz_dfs:/ozone/    ramdisk.128m@128m.oz_dfs:/ozone/
+dismount ramdisk.128m@128m.oz_dfs					! dismount ram disk
+set load_device ramdisk.128m@128m					! set to boot from ram disk

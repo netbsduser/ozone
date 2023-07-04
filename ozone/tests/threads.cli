@@ -1,0 +1,33 @@
+	create symbol -string user_hand '""'
+	create symbol -string user_code '"user_first"'
+user_loop:
+	create symbol -string user_hand 'oz_h_info (user_hand, user_code)'
+	if {user_hand == ""} exit
+	create symbol -string user_code '"user_next"'
+	create symbol -string user_name 'oz_h_info (user_hand, "user_name")'
+	echo User: {user_name}
+	create symbol -string job_hand user_hand
+	create symbol -string job_code '"job_first"'
+job_loop:
+	create symbol -string job_hand 'oz_h_info (job_hand, job_code)'
+	if {job_hand == ""} goto user_loop
+	create symbol -string job_code '"job_next"'
+	create symbol -string job_name 'oz_h_info (job_hand, "job_name")'
+	echo Job: {job_name}
+	create symbol -string proc_hand job_hand
+	create symbol -string proc_code '"process_first"'
+proc_loop:
+	create symbol -string proc_hand 'oz_h_info (proc_hand, proc_code)'
+	if {proc_hand == ""} goto job_loop
+	create symbol -string proc_code '"process_next"'
+	create symbol -string proc_name 'oz_h_info (proc_hand, "process_name")'
+	echo Process: {proc_name}
+	create symbol -string thread_hand proc_hand
+	create symbol -string thread_code '"thread_first"'
+thread_loop:
+	create symbol -string thread_hand 'oz_h_info (thread_hand, thread_code)'
+	if {thread_hand == ""} goto proc_loop
+	create symbol -string thread_code '"thread_next"'
+	create symbol -string thread_name 'oz_h_info (thread_hand, "thread_name")'
+	echo Thread: {thread_name}
+	goto thread_loop

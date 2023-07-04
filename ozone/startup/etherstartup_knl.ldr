@@ -1,0 +1,15 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!
+!!	etherstartup.ldr
+!!
+!!  Called by make_efloppy.ldr when booted to copy the files 
+!!  from the linux system to a harddisk, then boot the harddisk
+!!
+mount ide_pm oz_dfs						! mount hard disk
+
+copy 65.85.95.151.2290:/ozone/binaries/oz_kernel_486.oz ide_pm.oz_dfs:/ozone/binaries/oz_kernel_486.oz
+
+dismount ide_pm.oz_dfs					! dismount harddisk
+set load_device ide_pm					! set to boot from harddisk
+set load_fstemplate oz_dfs
+set nonpaged_pool_size 8388608

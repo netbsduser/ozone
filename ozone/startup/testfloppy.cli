@@ -1,0 +1,9 @@
+echo {oz_verify(1)}
+##mount 1440K ramdisk OZ_JOB_TABLE%myramdisk
+##create symbol h_logname {oz_lnm_lookup ("myramdisk", "user")}
+##create symbol myramdisk {oz_lnm_string (h_logname, 0)}
+create symbol myramdisk floppy.p0
+init -writethru {myramdisk} oz_dfs testdisk
+mount {myramdisk} oz_dfs OZ_JOB_TABLE%myramdiskfs:
+copy /ozone/startup/* myramdiskfs:/
+dir myramdiskfs:/

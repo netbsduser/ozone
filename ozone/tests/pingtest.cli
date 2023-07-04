@@ -1,0 +1,3 @@
+-nowait -thread ping1 ip ping 209.113.172.71
+-nowait -thread ping2 ip ping 209.113.172.70
+-nowait -thread ping3 ip ping 209.113.172.86

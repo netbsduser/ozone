@@ -1,0 +1,14 @@
+create symbol v {oz_verify (1)}
+create logical name OZ_SYSTEM_TABLE%UTIL_DISK -copy OZ_LOAD_FS
+script ../startup/cli_startup.cli
+script ../startup/bin86_startup.cli
+script ../startup/binutils_startup.cli
+script ../startup/gcc_startup.cli
+create logical name OZ_SYSTEM_TABLE%OZ_IMAGE_DIR OZ_DEFAULT_DIR: -copy OZ_IMAGE_DIR
+create logical name -kernel OZ_SYSTEM_TABLE%OZ_LOGON_IMAGE oz_cli.oz -value -interactive
+
+# ***************************************
+# *** Press Control-Shift-L to log on ***
+# ***************************************
+
+exit

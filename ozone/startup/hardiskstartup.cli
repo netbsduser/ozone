@@ -1,0 +1,11 @@
+echo "{oz_arg_0}: executing startup procedure ..."
+create symbol v {oz_verify (1)}
+script ../startup/commonstartup.cli
+#
+# Create and enable crash dump file
+#
+## crash create /crash.dmp;1 262152
+## crash file /crash.dmp
+## crash mode debug ## dump
+#
+exit

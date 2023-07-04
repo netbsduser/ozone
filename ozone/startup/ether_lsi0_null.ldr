@@ -1,0 +1,8 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!
+!!	ether_lsil0_null.ldr
+!!
+!!  Called by remote system on boot
+
+set load_device lsil875_0_9.0	! set to boot from harddisk on exit
+set load_fstemplate oz_dfs

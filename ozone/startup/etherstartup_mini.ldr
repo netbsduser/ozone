@@ -1,0 +1,23 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!
+!!	etherstartup_mini.ldr
+!!
+!!  Called by make_efloppy.ldr when booted to copy the files 
+!!  from the linux system to a harddisk, then boot the harddisk
+!!
+init ide_pm oz_dfs bootdisk
+mount ide_pm oz_dfs
+mkdir ide_pm.oz_dfs:/ozone/
+copy 65.85.95.151.2290:/ozone/includes/    ide_pm.oz_dfs:/ozone/includes/
+copy 65.85.95.151.2290:/ozone/sources/     ide_pm.oz_dfs:/ozone/sources/
+copy 65.85.95.151.2290:/ozone/objects/     ide_pm.oz_dfs:/ozone/objects/
+copy 65.85.95.151.2290:/ozone/libraries/   ide_pm.oz_dfs:/ozone/libraries/
+copy 65.85.95.151.2290:/ozone/binaries/    ide_pm.oz_dfs:/ozone/binaries/
+copy 65.85.95.151.2290:/ozone/startup/     ide_pm.oz_dfs:/ozone/startup/
+
+set nonpaged_pool_size 8388608
+writeboot ide_pm.oz_dfs:/ozone/binaries/oz_loader_486.bb
+
+dismount ide_pm.oz_dfs					! dismount harddisk
+set load_device ide_pm					! set to boot from harddisk
+set load_fstemplate oz_dfs

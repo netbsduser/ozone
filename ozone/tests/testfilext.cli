@@ -1,0 +1,6 @@
+	echo {oz_verify(1)}
+	dism {oz_arg_1}.oz_dfs
+	init -clusterfactor 1 {oz_arg_1} oz_dfs testfilext
+	mount {oz_arg_1} oz_dfs OZ_JOB_TABLE%{oz_arg_1}.oz_dfs:
+	credir {oz_arg_1}.oz_dfs:/testfilext/
+	run testfilext.oz {oz_arg_1}.oz_dfs:/testfilext/

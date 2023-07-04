@@ -1,0 +1,7 @@
+init dev_hda3 oz_dfs dev_hda3
+mount dev_hda3 oz_dfs
+copy fs_linux:oz_dev_disk_fs.c dev_hda3.oz_dfs:/x.x
+dump dev_hda3.oz_dfs:/x.x 20 1
+type dev_hda3.oz_dfs:/x.x
+dismount dev_hda3.oz_dfs
+barf

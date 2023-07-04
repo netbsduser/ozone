@@ -1,0 +1,5 @@
+loop:
+	delete ../objects/*
+	delete ../libraries/*
+	script ozmake.cli kernelimages
+	goto loop

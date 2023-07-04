@@ -1,0 +1,6 @@
+!
+!  cdloader.ldr
+!
+!  This is executed by the CDROM loader
+!  All options are programmed into the param block by the makefile
+!

@@ -1,0 +1,4 @@
+gcc -DOZ_HW_TYPE_486 -c -o oz_dev_ext160g.o oz_dev_ext160g.c
+#gcc -DOZ_HW_TYPE_486 -c -o oz_dev_ext160g_image.o -DENTRYPOINT=oz_dev_dfs_init oz_dev_image.c
+ld -d -r -o oz_dev_ext160g.r oz_dev_ext160g.o oz_dev_ext160g_image.o 
+elfconv -dynamic oz_dev_ext160g.oz oz_dev_ext160g.r oz_kernel_486.oz

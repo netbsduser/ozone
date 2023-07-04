@@ -1,0 +1,1 @@
+~/ozone/linux_utils/axp/ld -o ../alphaobj/oz_loader_axp.elf64 ../alphaobj/oz_loader_axp.r --defsym OZ_IMAGE_NEXTADDR=12345678 -Ttext FFFFFFFA20000000

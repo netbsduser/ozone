@@ -1,0 +1,32 @@
+	create symbol -integer fnum 6
+	create symbol -integer numhdrs 0
+	create symbol -integer numptrs 0
+	mount 1M ramdisk OZ_JOB_TABLE%rd_raw
+	create symbol h_logname {oz_lnm_lookup ("rd_raw", "user")}
+	create symbol rd_raw {oz_lnm_string (h_logname, 0)}
+	close handle h_logname
+	init {rd_raw} oz_dfs dumpheaders
+	mount {rd_raw} oz_dfs OZ_JOB_TABLE%rd_dfs:
+loop:
+	-output rd_dfs:/dumpheaders.tmp dump -blockcount 1 -blockskip {fnum-1} lsil875_0_10.0.oz_dfs:/oz_fs_indexheaders
+	open file -lockmode PR -logical dht rd_dfs:/dumpheaders.tmp
+	read file -logical dht dummy
+	read file -logical dht dummy
+	read file -logical dht dummy
+	read file -logical dht line_0000
+	read file -logical dht line_0010
+	read file -logical dht line_0020
+	read file -logical dht line_0030
+	delete logical name dht
+	delete rd_dfs:/dumpheaders.tmp;*
+	create symbol extfnum_hex {oz_sub (8,  2, line_0000)}
+	create symbol ptrsize_hex {oz_sub (4, 33, line_0030)}
+	create symbol -integer ptrsize 0x{ptrsize_hex}
+	create symbol -integer ptrcount ptrsize/8
+	create symbol -integer numhdrs numhdrs+1
+	create symbol -integer numptrs numptrs+ptrcount
+	echo {numhdrs}) {fnum}: {ptrcount} -> {numptrs}
+	create symbol -integer fnum 0x{extfnum_hex}
+	if {fnum!=0} goto loop
+	echo Number of headers: {numhdrs}
+	echo Avg ptrs per hdr: {numptrs/numhdrs}

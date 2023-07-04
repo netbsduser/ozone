@@ -1,0 +1,4 @@
+create logical name OZ_CLI_TABLES%infloop infloop.oz
+-nowait -thread OZ_SYSTEM_TABLE%inf1 infloop
+-nowait -thread OZ_SYSTEM_TABLE%inf2 infloop
+-nowait -thread OZ_SYSTEM_TABLE%inf3 infloop

@@ -1,0 +1,13 @@
+gcc -g -c -o dumps.o dumps.c
+gcc -g -c -o ld86_execv.o ld86_execv.c
+gcc -g -c -o io.o io.c
+gcc -g -c -o ld.o ld.c
+gcc -g -c -o linksyms.o linksyms.c
+gcc -g -c -o readobj.o readobj.c
+gcc -g -c -o table.o table.c
+gcc -g -c -o typeconv.o typeconv.c
+gcc -g -c -o writebin.o writebin.c
+gcc -g -c -o writerel.o writerel.c
+gcc -g -c -o writex86.o writex86.c
+ld -d -r -o ld86.r dumps.o ld86_execv.o io.o ld.o readobj.o table.o typeconv.o linksyms.o writex86.o writebin.o writerel.o -e _start /ozone/objects/oz_crtl_start.o /ozone/libraries/oz_crtl.a
+-output ld86.m elfconv 20000000 ld86.oz ld86.r oz_kernel_486.oz

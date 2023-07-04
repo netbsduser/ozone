@@ -1,0 +1,6 @@
+echo {oz_verify(1)}
+init ide_pm oz_dfs test
+mount ide_pm oz_dfs
+credir ide_pm.oz_dfs:/ozone/
+credir ide_pm.oz_dfs:/ozone/alphabin/
+dir -long ide_pm.oz_dfs:/ozone/

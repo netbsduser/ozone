@@ -1,0 +1,4 @@
+ip hw add dec21041_0_11
+ip hw ipam add dec21041_0_11 209.113.172.94 255.255.255.192
+ip route add 0.0.0.0 0.0.0.0 209.113.172.65
+ip debug 0

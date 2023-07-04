@@ -1,0 +1,4 @@
+gcc -D_OZONE -DOZ_HW_TYPE_486 -c -o getpidtest.o getpidtest.c
+ld -d -r -o getpidtest.r getpidtest.o /ozone/objects/oz_crtl_start.o /ozone/libraries/oz_crtl.a
+-output null: elfconv getpidtest.oz getpidtest.r oz_kernel_486.oz
+run getpidtest.oz

@@ -1,0 +1,3 @@
+!! hardiskstartup.ldr
+set tz_offset_rtc -14400
+!! set uniprocessor 1

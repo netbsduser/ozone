@@ -1,0 +1,25 @@
+
+INC = -nostdinc -I./	\
+	-I../../../../ozone/includes	\
+	-I../../../../gcc/includes	\
+	-I../../../../glibc/includes
+
+CC = xgcc -O2 -c $(INC) -D_OZONE -DOZ_HW_TYPE_486 -DREL_OUTPUT -DBUGCOMPAT
+
+ld86.oz: dumps.c io.c ld.c readobj.c table.c typeconv.c linksyms.c writex86.c writebin.c writerel.c
+	$(CC) dumps.c -o dumps.o
+	$(CC) ld86_execv.c -o ld86_execv.o
+	$(CC) io.c -o io.o
+	$(CC) ld.c -o ld.o
+	$(CC) readobj.c -o readobj.o
+	$(CC) table.c -o table.o
+	$(CC) typeconv.c -o typeconv.o
+	$(CC) linksyms.c -o linksyms.o
+	$(CC) writex86.c -o writex86.o
+	$(CC) writebin.c -o writebin.o
+	$(CC) writerel.c -o writerel.o
+	ld -d -r -o ld86.r dumps.o ld86_execv.o io.o ld.o readobj.o table.o typeconv.o linksyms.o writex86.o writebin.o writerel.o ../../../../ozone/objects/oz_crtl_start.o ../../../../ozone/libraries/oz_crtl.a
+	ln -f -s ../../../../ozone/binaries/oz_kernel_486.oz oz_kernel_486.oz
+	../../../../ozone/linux/oz_util_elfconv ld86.oz ld86.r oz_kernel_486.oz
+	rm -f oz_kernel_486.oz
+	cp ld86.oz ../../../binaries/

@@ -1,0 +1,13 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!
+!!	ether_lsi0_binsmp.ldr
+!!
+!!  Called by remote system on boot.  It copies all binaries
+!!  from the linux system to a harddisk, then boots the harddisk
+
+mount lsil875_0_9.0 oz_dfs								! explicit mount so caching gets enabled
+copy 65.85.95.151.2290:/ozone/binaries/ lsil875_0_9.0.oz_dfs:/ozone/binaries/
+dismount lsil875_0_9.0.oz_dfs								! dismount harddisk
+
+set load_device lsil875_0_9.0								! set to boot from harddisk on exit
+set load_fstemplate oz_dfs

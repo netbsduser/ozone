@@ -1,0 +1,18 @@
+gcc -g -c -o as.o as.c
+gcc -g -c -o assemble.o assemble.c
+gcc -g -c -o error.o error.c
+gcc -g -c -o express.o express.c
+gcc -g -c -o genbin.o genbin.c
+gcc -g -c -o genlist.o genlist.c
+gcc -g -c -o genobj.o genobj.c
+gcc -g -c -o gensym.o gensym.c
+gcc -g -c -o keywords.o keywords.c
+gcc -g -c -o macro.o macro.c
+gcc -g -c -o mops.o mops.c
+gcc -g -c -o pops.o pops.c
+gcc -g -c -o readsrc.o readsrc.c
+gcc -g -c -o scan.o scan.c
+gcc -g -c -o table.o table.c
+gcc -g -c -o typeconv.o typeconv.c
+ld  -d -r -o as86.r as.o assemble.o error.o express.o genbin.o genlist.o genobj.o gensym.o keywords.o macro.o mops.o pops.o readsrc.o scan.o table.o typeconv.o -e _start /ozone/objects/oz_crtl_start.o /ozone/libraries/oz_crtl.a
+-output as86.m elfconv 20000000 as86.oz as86.r oz_kernel_486.oz

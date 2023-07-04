@@ -1,0 +1,62 @@
+!
+!  bootfloppy.ldr
+!
+!  It sets the loader boot params
+!  before the kernel is loaded
+!
+
+init -clusterfactor 8 ramdisk.8M@24M oz_dfs ramboot	! format ram at 24M..32M as an oz_dfs filesystem
+mount ramdisk.8M@24M oz_dfs				! mount it
+
+copy   floppy.p0.oz_dfs:/oz_loader_486.bb              ramdisk.8M@24M.oz_dfs:/oz_loader_486.bb
+##gunzip floppy.p0.oz_dfs:/dumppcidevs.oz.gz             ramdisk.8M@24M.oz_dfs:/dumppcidevs.oz
+gunzip floppy.p0.oz_dfs:/dumppmem.oz.gz                ramdisk.8M@24M.oz_dfs:/dumppmem.oz
+gunzip floppy.p0.oz_dfs:/dumpppt.oz.gz                 ramdisk.8M@24M.oz_dfs:/dumpppt.oz
+gunzip floppy.p0.oz_dfs:/dumpppt_knl.oz.gz             ramdisk.8M@24M.oz_dfs:/dumpppt_knl.oz
+gunzip floppy.p0.oz_dfs:/dumprtcram.oz.gz              ramdisk.8M@24M.oz_dfs:/dumprtcram.oz
+gunzip floppy.p0.oz_dfs:/oz_kernel_486.oz.gz           ramdisk.8M@24M.oz_dfs:/oz_kernel_486.oz
+gunzip floppy.p0.oz_dfs:/oz_cli.oz.gz                  ramdisk.8M@24M.oz_dfs:/oz_cli.oz
+gunzip floppy.p0.oz_dfs:/oz_dev_fat.oz.gz              ramdisk.8M@24M.oz_dfs:/oz_dev_fat.oz
+gunzip floppy.p0.oz_dfs:/oz_util_cat.oz.gz             ramdisk.8M@24M.oz_dfs:/oz_util_cat.oz
+gunzip floppy.p0.oz_dfs:/oz_util_copy.oz.gz            ramdisk.8M@24M.oz_dfs:/oz_util_copy.oz
+gunzip floppy.p0.oz_dfs:/oz_util_credir.oz.gz          ramdisk.8M@24M.oz_dfs:/oz_util_credir.oz
+gunzip floppy.p0.oz_dfs:/oz_util_dd.oz.gz              ramdisk.8M@24M.oz_dfs:/oz_util_dd.oz
+gunzip floppy.p0.oz_dfs:/oz_util_delete.oz.gz          ramdisk.8M@24M.oz_dfs:/oz_util_delete.oz
+gunzip floppy.p0.oz_dfs:/oz_util_dir.oz.gz             ramdisk.8M@24M.oz_dfs:/oz_util_dir.oz
+gunzip floppy.p0.oz_dfs:/oz_util_dismount.oz.gz        ramdisk.8M@24M.oz_dfs:/oz_util_dismount.oz
+gunzip floppy.p0.oz_dfs:/oz_util_dump.oz.gz            ramdisk.8M@24M.oz_dfs:/oz_util_dump.oz
+gunzip floppy.p0.oz_dfs:/oz_util_ftpd.oz.gz            ramdisk.8M@24M.oz_dfs:/oz_util_ftpd.oz
+gunzip floppy.p0.oz_dfs:/oz_util_gzip.oz.gz            ramdisk.8M@24M.oz_dfs:/oz_util_gzip.oz
+gunzip floppy.p0.oz_dfs:/oz_util_kimage.oz.gz          ramdisk.8M@24M.oz_dfs:/oz_util_kimage.oz
+gunzip floppy.p0.oz_dfs:/oz_util_init.oz.gz            ramdisk.8M@24M.oz_dfs:/oz_util_init.oz
+gunzip floppy.p0.oz_dfs:/oz_util_ip.oz.gz              ramdisk.8M@24M.oz_dfs:/oz_util_ip.oz
+gunzip floppy.p0.oz_dfs:/oz_util_logon.oz.gz           ramdisk.8M@24M.oz_dfs:/oz_util_logon.oz
+gunzip floppy.p0.oz_dfs:/oz_util_mount.oz.gz           ramdisk.8M@24M.oz_dfs:/oz_util_mount.oz
+gunzip floppy.p0.oz_dfs:/oz_util_prochandles.oz.gz     ramdisk.8M@24M.oz_dfs:/oz_util_prochandles.oz
+gunzip floppy.p0.oz_dfs:/oz_knl_prochandles.oz.gz      ramdisk.8M@24M.oz_dfs:/oz_knl_prochandles.oz
+gunzip floppy.p0.oz_dfs:/oz_util_scsi.oz.gz            ramdisk.8M@24M.oz_dfs:/oz_util_scsi.oz
+gunzip floppy.p0.oz_dfs:/oz_util_shutdown.oz.gz        ramdisk.8M@24M.oz_dfs:/oz_util_shutdown.oz
+gunzip floppy.p0.oz_dfs:/oz_util_telnet.oz.gz          ramdisk.8M@24M.oz_dfs:/oz_util_telnet.oz
+gunzip floppy.p0.oz_dfs:/oz_util_telnetd.oz.gz         ramdisk.8M@24M.oz_dfs:/oz_util_telnetd.oz
+gunzip floppy.p0.oz_dfs:/oz_util_top.oz.gz             ramdisk.8M@24M.oz_dfs:/oz_util_top.oz
+gunzip floppy.p0.oz_dfs:/oz_util_verify.oz.gz          ramdisk.8M@24M.oz_dfs:/oz_util_verify.oz
+gunzip floppy.p0.oz_dfs:/oz_util_writeboot.oz.gz       ramdisk.8M@24M.oz_dfs:/oz_util_writeboot.oz
+gunzip floppy.p0.oz_dfs:/pokephys.oz.gz                ramdisk.8M@24M.oz_dfs:/pokephys.oz
+gunzip floppy.p0.oz_dfs:/edt.oz.gz                     ramdisk.8M@24M.oz_dfs:/edt.oz
+gunzip floppy.p0.oz_dfs:/edt.hlp.gz                    ramdisk.8M@24M.oz_dfs:/edt.hlp
+copy   floppy.p0.oz_dfs:/bootfloppy.cli                ramdisk.8M@24M.oz_dfs:/bootfloppy.cli
+copy   floppy.p0.oz_dfs:/filldisk.cli                  ramdisk.8M@24M.oz_dfs:/filldisk.cli
+gunzip floppy.p0.oz_dfs:/EST5EDT.gz                    ramdisk.8M@24M.oz_dfs:/EST5EDT
+
+dism ramdisk.8M@24M.oz_dfs
+
+set load_device ramdisk.8M@24M		! boot from the ramdisk we just made
+set kernel_image oz_kernel_486.oz	! name of kernel image file to load
+set startup_image oz_cli.oz		! startup executable file (the 'shell')
+set startup_input bootfloppy.cli	! startup script file
+set startup_output console:		! startup output file
+set startup_error console:		! startup error file
+set kernel_stack_size 12288		! kernel stack size (12K)
+set def_user_stack_size 1048576		! user stack size (1Meg)
+set nonpaged_pool_size 1048576		! non-paged pool size (1Meg)
+##set tz_offset_rtc -18000		! RTC is in EST

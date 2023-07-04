@@ -1,0 +1,30 @@
+#
+# Copy all the stuff needed to build Ozone
+#
+copy -update baron:/ozone/sources/*.c   /ozone/sources/
+copy -udpate baron:/ozone/sources/*.s   /ozone/sources/
+copy -udpate baron:/ozone/sources/*.t   /ozone/sources/
+copy -update baron:/ozone/sources/make* /ozone/sources/make
+copy -update baron:/ozone/includes/*.h  /ozone/includes/
+copy -update baron:/ozone/tests/*.c     /ozone/tests/
+copy -update baron:/ozone/tests/*.s     /ozone/tests/
+#
+create logical name gs baron:/glibc/sources/glibc-2.0.6/
+create logical name gz baron:/glibc/includes/
+create logical name gi OZ_LOAD_FS:/glibc/includes/
+copy -update gs:*.h                         gi:
+copy -update gz:asm/*.h                     gi:asm/
+copy -update gs:gnu/*.h                     gi:gnu/
+copy -update gs:io/*.h                      gi:io/
+copy -update gs:io/sys/*.h                  gi:io/sys/
+copy -update gz:linux/*.h                   gi:linux/
+copy -update gs:misc/sys/*.h                gi:misc/sys/
+copy -update gs:posix/*.h                   gi:posix/
+copy -update gs:posix/sys/*.h               gi:posix/sys/
+copy -update gs:string/*.h                  gi:string/
+copy -update gs:sys/*.h                     gi:sys/
+copy -update gs:sysdeps/generic/*.h         gi:
+copy -update gs:sysdeps/generic/gnu/*.h     gi:gnu/
+copy -update gs:sysdeps/i386/*.h            gi:
+copy -update gs:sysdeps/unix/sysv/linux/*.h gi:
+copy -update gs:time/*.h                    gi:time/

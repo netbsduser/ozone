@@ -1,0 +1,1 @@
+cc -D_OZONE -DOZ_HW_TYPE_486 -o dumpozimage -I../includes dumpozimage.c

@@ -1,0 +1,5 @@
+echo {oz_verify(1)}
+init -writethru floppy.p0 oz_dfs floppydisk
+mount floppy.p0 oz_dfs
+copy /ozone/startup/* floppy.p0.oz_dfs:/
+dir floppy.p0.oz_dfs:/

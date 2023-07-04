@@ -1,0 +1,32 @@
+!
+!  gccfloppy.ldr
+!
+!  It sets the loader boot params
+!  before the kernel is loaded
+!
+
+init ramdisk.8M@24M oz_dfs gccramdisk	! format ram at 24M..32M as an oz_dfs filesystem
+mount ramdisk.8M@24M oz_dfs		! mount it
+
+copy   ide_pm.oz_dfs:/oz_loader_486.bb    ramdisk.8M@24M.oz_dfs:/oz_loader_486.bb
+gunzip ide_pm.oz_dfs:/oz_kernel_486.oz.gz ramdisk.8M@24M.oz_dfs:/oz_kernel_486.oz
+gunzip ide_pm.oz_dfs:/oz_cli.oz.gz        ramdisk.8M@24M.oz_dfs:/oz_cli.oz
+gunzip ide_pm.oz_dfs:/oz_util_dir.oz.gz   ramdisk.8M@24M.oz_dfs:/oz_util_dir.oz
+gunzip ide_pm.oz_dfs:/cc1.oz.gz           ramdisk.8M@24M.oz_dfs:/cc1.oz
+gunzip ide_pm.oz_dfs:/cpp0.oz.gz          ramdisk.8M@24M.oz_dfs:/cpp0.oz
+gunzip ide_pm.oz_dfs:/gcc.oz.gz           ramdisk.8M@24M.oz_dfs:/gcc.oz
+copy   ide_pm.oz_dfs:/gccfloppy.cli       ramdisk.8M@24M.oz_dfs:/gccfloppy.cli
+copy   ide_pm.oz_dfs:/testgcc.c           ramdisk.8M@24M.oz_dfs:/testgcc.c
+
+dism ramdisk.8M@24M.oz_dfs
+
+set load_device ramdisk.8M@24M		! boot from the ramdisk we just made
+set kernel_image oz_kernel_486.oz	! name of kernel image file to load
+set startup_image oz_cli.oz		! startup executable file (the 'shell')
+set startup_input gccfloppy.cli		! startup script file
+set startup_output console:		! startup output file
+set startup_error console:		! startup error file
+set kernel_stack_size 12288		! kernel stack size (12K)
+set def_user_stack_size 1048576		! user stack size (1Meg)
+set nonpaged_pool_size 4194304		! non-paged pool size (4Meg)
+set tz_offset_rtc -18000		! RTC is in EST

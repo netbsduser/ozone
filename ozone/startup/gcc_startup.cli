@@ -1,0 +1,16 @@
+# set up the images to be executed
+create logical name OZ_SYSTEM_TABLE%OZ_IMAGE_DIR -copy OZ_SYSTEM_TABLE%OZ_IMAGE_DIR GCC_BINARIES:
+create logical name OZ_SYSTEM_TABLE%GCC_BINARIES UTIL_DISK:/gcc/binaries/
+create logical name OZ_CLI_TABLES%gcc gcc.oz
+create logical name OZ_CLI_TABLES%cpp cpp.oz
+create logical name OZ_CLI_TABLES%cc1 cc1.oz
+# create logicals for the include directories (listed in order that cpp searches them)
+create logical name OZ_SYSTEM_TABLE%GCC_LOCAL_INCLUDE_DIR ''					# for user's own use
+create logical name OZ_SYSTEM_TABLE%GCC_TOOL_INCLUDE_DIR UTIL_DISK:/ozone/includes/		# operating system files (eg, oz_sys_spawn.h)
+create logical name OZ_SYSTEM_TABLE%GCC_INCLUDE_DIR UTIL_DISK:/gcc/includes/			# stuff supplied by compiler (eg, stdarg.h)
+create logical name OZ_SYSTEM_TABLE%GCC_STANDARD_INCLUDE_DIR UTIL_DISK:/glibc/includes/		# run time library (eg, stdio.h)
+# create logicals for linking
+create logical name OZ_SYSTEM_TABLE%GCC_LOCAL_LIBRARY_DIR ''					# for user's own use
+create logical name OZ_SYSTEM_TABLE%GCC_TOOL_LIBRARY_DIR UTIL_DISK:/ozone/libraries/		# operating system libraries
+create logical name OZ_SYSTEM_TABLE%GCC_LIBRARY_DIR UTIL_DISK:/gcc/libraries/			# compiler files (__udivi3, etc)
+create logical name OZ_SYSTEM_TABLE%GCC_STANDARD_LIBRARY_DIR UTIL_DISK:/glibc/libraries/	# standard run time library (qsort, etc)

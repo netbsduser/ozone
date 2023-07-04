@@ -1,0 +1,10 @@
+!! hardiskstartup.ldr
+init ramdisk.8m@24m oz_dfs 8m@24m
+mkdir ramdisk.8m@24m.oz_dfs:/ozone/
+mkdir ramdisk.8m@24m.oz_dfs:/ozone/binaries/
+mkdir ramdisk.8m@24m.oz_dfs:/ozone/startup/
+copy ide_pm.oz_dfs:/ozone/binaries/oz_kernel_486.oz  ramdisk.8m@24m.oz_dfs:/ozone/binaries/oz_kernel_486.oz
+copy ide_pm.oz_dfs:/ozone/binaries/oz_cli.oz         ramdisk.8m@24m.oz_dfs:/ozone/binaries/oz_cli.oz
+copy ide_pm.oz_dfs:/ozone/startup/hardiskstartup.cli ramdisk.8m@24m.oz_dfs:/ozone/startup/hardiskstartup.cli
+dismount ramdisk.8m@24m.oz_dfs
+set load_device ramdisk.8m@24m

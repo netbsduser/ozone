@@ -1,0 +1,3 @@
+mount dec21041_0_11:209.113.172.94:255.255.255.224:209.113.172.65:209.113.172.16:2290 oz_ip_fs
+create logical name -kernel OZ_DEFAULT_DIR 209.113.172.16.2290:/
+create logical name -kernel OZ_SYSTEM_TABLE%OZ_DEFAULT_DIR 209.113.172.16.2290:/

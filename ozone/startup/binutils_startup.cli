@@ -1,0 +1,6 @@
+# set up the image to be executed
+create logical name OZ_SYSTEM_TABLE%OZ_IMAGE_DIR -copy OZ_SYSTEM_TABLE%OZ_IMAGE_DIR BINUTILS_BINARIES:
+create logical name OZ_SYSTEM_TABLE%BINUTILS_BINARIES UTIL_DISK:/binutils/binaries/
+create logical name OZ_CLI_TABLES%ar ar.oz
+create logical name OZ_CLI_TABLES%as as.oz
+create logical name OZ_CLI_TABLES%ld ld.oz

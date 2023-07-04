@@ -1,0 +1,7 @@
+	create symbol h_devunit {oz_h_info ("", "device_first")}
+loop:
+	echo {h_devunit} {oz_h_info (h_devunit, "device_unitname")}
+	create symbol h_devunit_new {oz_h_info (h_devunit, "device_next")}
+	close handle {h_devunit}
+	create symbol h_devunit {h_devunit_new}
+	if {h_devunit != ""} goto loop
